@@ -1,17 +1,23 @@
 package com.example.testtask.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
+@Table(name = "contacts")
 public class Contact {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "fullname")
     private String fullName;
+
+    @Column(name = "job")
     private String job;
 
-    @ManyToOne
-    private ContactItem contactItem;
+    @OneToMany(mappedBy = "contact")
+    private List<ContactItem> contactItems;
 
     protected Contact() {
 

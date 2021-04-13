@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -14,27 +13,33 @@ public class ContactService {
     private final ContactRepository repo;
 
     @Autowired
-    public ContactService(@Qualifier("fakeContact") ContactRepository repo) {
+    public ContactService(@Qualifier("contact") ContactRepository repo) {
         this.repo = repo;
     }
 
-    public Long addContact(Contact contact) {
-        return this.repo.insertContact(contact);
+    public void addContact(Contact contact) {
+        this.repo.save(contact);
     }
 
-    public List<Contact> getAllContacts() {
-        return this.repo.getAllContacts();
+    public Iterable<Contact> getAllContacts() {
+        return this.repo.findAll();
     }
 
     public Optional<Contact> getContactById(Long id) {
-        return this.repo.getContactById(id);
+        return this.repo.findById(id);
     }
 
-    public int deleteContactById(Long id) {
-        return this.repo.deleteContactById(id);
+    public void deleteContactById(Long id) {
+        this.repo.deleteById(id);
     }
 
-    public int updateContactById(Long id, Contact contact) {
-        return this.repo.updateContactById(id, contact);
+    public void updateContactById(Long id, Contact updated) {
+        Optional<Contact> optionalContact = this.repo.findById(id);
+        if (optionalContact.isPresent()) {
+            Contact contact = optionalContact.get();
+            contact.setFullName(updated.getFullName());
+            contact.setJob(updated.getJob());
+            this.repo.save(contact);
+        }
     }
 }

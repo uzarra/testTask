@@ -1,26 +1,32 @@
 package com.example.testtask.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "contact_items")
 public class ContactItem {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "contact_id")
     private Long contactId;
-    private String contactTypeItem;
+
+    @ManyToOne
+    @JoinColumn(name = "contact_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+    private Contact contact;
+
+    @Column(name = "contact_item_type")
+    private String contactItemType;
     private String value;
 
     protected ContactItem() {
 
     }
 
-    public ContactItem(Long contactId, String contactTypeItem, String value) {
+    public ContactItem(Long contactId, String contactItemType, String value) {
         this.contactId = contactId;
-        this.contactTypeItem = contactTypeItem;
+        this.contactItemType = contactItemType;
         this.value = value;
     }
 
@@ -40,12 +46,12 @@ public class ContactItem {
         this.contactId = contactId;
     }
 
-    public String getContactTypeItem() {
-        return contactTypeItem;
+    public String getContactItemType() {
+        return contactItemType;
     }
 
-    public void setContactTypeItem(String contactTypeItem) {
-        this.contactTypeItem = contactTypeItem;
+    public void setContactItemType(String contactTypeItem) {
+        this.contactItemType = contactTypeItem;
     }
 
     public String getValue() {

@@ -7,40 +7,38 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RequestMapping("api/contacts")
 @RestController
 public class ContactController {
-    private final ContactService contactService;
+    private final ContactService service;
 
     @Autowired
-    public ContactController(ContactService contactService) {
-        this.contactService = contactService;
+    public ContactController(ContactService service) {
+        this.service = service;
     }
 
     @PostMapping
     public void addContact(@Validated @NotNull @RequestBody Contact contact) {
-        this.contactService.addContact(contact);
+        this.service.addContact(contact);
     }
 
     @GetMapping
-    public List<Contact> getAllContacts() {
-        return this.contactService.getAllContacts();
+    public Iterable<Contact> getAllContacts() {
+        return this.service.getAllContacts();
     }
 
     @GetMapping(path = "{id}")
     public Contact getContactById(@PathVariable("id") Long id) {
-        return this.contactService.getContactById(id).orElse(null);
+        return this.service.getContactById(id).orElse(null);
     }
 
     @DeleteMapping(path = "{id}")
     public void deleteContactById(@PathVariable("id") Long id) {
-        this.contactService.deleteContactById(id);
+        this.service.deleteContactById(id);
     }
 
     @PutMapping(path = "{id}")
     public void updateContact(@PathVariable("id") Long id, @RequestBody Contact contact) {
-        this.contactService.updateContactById(id, contact);
+        this.service.updateContactById(id, contact);
     }
 }
