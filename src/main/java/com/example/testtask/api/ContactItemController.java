@@ -2,23 +2,17 @@ package com.example.testtask.api;
 
 import com.example.testtask.model.ContactItem;
 import com.example.testtask.service.ContactItemService;
-import com.sun.istack.NotNull;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("api/contactItems")
 @RestController
+@RequiredArgsConstructor
 public class ContactItemController {
     private final ContactItemService service;
 
-    @Autowired
-    public ContactItemController(ContactItemService service) {
-        this.service = service;
-    }
-
     @PostMapping
-    public void addContactItem(@Validated @NotNull @RequestBody ContactItem contactItem) {
+    public void addContactItem(@RequestBody ContactItem contactItem) {
         this.service.addContactItem(contactItem);
     }
 
@@ -28,7 +22,7 @@ public class ContactItemController {
     }
 
     @GetMapping(path = "contactId={contactId}")
-    public Iterable<ContactItem> getContactItemsByContactId(@NotNull @PathVariable("contactId") Long id) {
+    public Iterable<ContactItem> getContactItemsByContactId(@PathVariable("contactId") Long id) {
         return this.service.getAllContactItemsFilteredByContactId(id);
     }
 

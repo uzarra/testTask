@@ -3,20 +3,16 @@ package com.example.testtask.service;
 import com.example.testtask.model.ContactItem;
 import com.example.testtask.model.ContactItemSpecifications;
 import com.example.testtask.repository.ContactItemRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import lombok.RequiredArgsConstructor;
+import lombok.var;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ContactItemService {
     private final ContactItemRepository repo;
-
-    @Autowired
-    public ContactItemService(@Qualifier("contactItem") ContactItemRepository repo) {
-        this.repo = repo;
-    }
 
     public void addContactItem(ContactItem contactItem) {
         this.repo.save(contactItem);
@@ -39,7 +35,7 @@ public class ContactItemService {
     }
 
     public void updateContactItemById(Long id, ContactItem updated) {
-        Optional<ContactItem> optionalContactItem = this.repo.findById(id);
+        var optionalContactItem = this.repo.findById(id);
         if (optionalContactItem.isPresent()) {
             ContactItem contactItem = optionalContactItem.get();
             contactItem.setContactItemType(updated.getContactItemType());

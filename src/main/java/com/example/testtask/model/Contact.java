@@ -1,54 +1,40 @@
 package com.example.testtask.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
+
+import static org.springframework.util.Assert.notNull;
 
 @Entity
 @Table(name = "contacts")
 public class Contact {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter @Setter
     private Long id;
 
     @Column(name = "fullname")
+    @NotNull
+    @Getter @Setter
     private String fullName;
 
-    @Column(name = "job")
+    @Getter @Setter
     private String job;
 
     @OneToMany(mappedBy = "contact")
     private List<ContactItem> contactItems;
 
-    protected Contact() {
+    public Contact() {
 
     }
 
     public Contact(String fullName, String job) {
+        notNull(fullName, "null fullName");
         this.fullName = fullName;
-        this.job = job;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public String getJob() {
-        return job;
-    }
-
-    public void setJob(String job) {
         this.job = job;
     }
 }

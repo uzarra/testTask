@@ -2,23 +2,17 @@ package com.example.testtask.api;
 
 import com.example.testtask.model.Contact;
 import com.example.testtask.service.ContactService;
-import com.sun.istack.NotNull;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("api/contacts")
 @RestController
+@RequiredArgsConstructor
 public class ContactController {
     private final ContactService service;
 
-    @Autowired
-    public ContactController(ContactService service) {
-        this.service = service;
-    }
-
     @PostMapping
-    public void addContact(@Validated @NotNull @RequestBody Contact contact) {
+    public void addContact(@RequestBody Contact contact) {
         this.service.addContact(contact);
     }
 
