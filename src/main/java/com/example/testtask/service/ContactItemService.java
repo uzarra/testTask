@@ -15,32 +15,32 @@ public class ContactItemService {
     private final ContactItemRepository repo;
 
     public void addContactItem(ContactItem contactItem) {
-        this.repo.save(contactItem);
+        repo.save(contactItem);
     }
 
     public Iterable<ContactItem> getAllContactItemsFilteredByContactId(Long contactId) {
-        return this.repo.findAll(ContactItemSpecifications.filterByContact(contactId));
+        return repo.findAll(ContactItemSpecifications.filterByContact(contactId));
     }
 
     public Iterable<ContactItem> getAllContactItems() {
-        return this.repo.findAll();
+        return repo.findAll();
     }
 
     public Optional<ContactItem> getContactItemById(Long id) {
-        return this.repo.findById(id);
+        return repo.findById(id);
     }
 
     public void deleteContactItemById(Long id) {
-        this.repo.deleteById(id);
+        repo.deleteById(id);
     }
 
     public void updateContactItemById(Long id, ContactItem updated) {
-        var optionalContactItem = this.repo.findById(id);
+        var optionalContactItem = repo.findById(id);
         if (optionalContactItem.isPresent()) {
             ContactItem contactItem = optionalContactItem.get();
             contactItem.setContactItemType(updated.getContactItemType());
             contactItem.setValue(updated.getValue());
-            this.repo.save(contactItem);
+            repo.save(contactItem);
         }
     }
 }

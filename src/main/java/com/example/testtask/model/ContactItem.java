@@ -1,17 +1,21 @@
 package com.example.testtask.model;
 
 import javax.validation.constraints.NotNull;
+
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 
-import static org.springframework.util.Assert.notNull;
-
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "contact_items")
 public class ContactItem {
     @Id
+    @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter @Setter
     private Long id;
@@ -30,18 +34,7 @@ public class ContactItem {
     @Getter @Setter
     private String contactItemType;
 
+    @Column
     @Getter @Setter
     private String value;
-
-    public ContactItem() {
-
-    }
-
-    public ContactItem(Long contactId, String contactItemType, String value) {
-        notNull(contactId, "null contactId");
-        notNull(contactItemType, "null contactItemType");
-        this.contactId = contactId;
-        this.contactItemType = contactItemType;
-        this.value = value;
-    }
 }

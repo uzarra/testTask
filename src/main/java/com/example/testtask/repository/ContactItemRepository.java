@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository("contactItem")
+@Repository
 public interface ContactItemRepository extends CrudRepository<ContactItem, Long>, JpaSpecificationExecutor<ContactItem> {
 }

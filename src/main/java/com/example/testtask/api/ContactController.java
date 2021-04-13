@@ -13,26 +13,26 @@ public class ContactController {
 
     @PostMapping
     public void addContact(@RequestBody Contact contact) {
-        this.service.addContact(contact);
+        service.addContact(contact);
     }
 
     @GetMapping
     public Iterable<Contact> getAllContacts() {
-        return this.service.getAllContacts();
+        return service.getAllContacts();
     }
 
     @GetMapping(path = "{id}")
     public Contact getContactById(@PathVariable("id") Long id) {
-        return this.service.getContactById(id).orElse(null);
+        return service.getContactById(id).orElse(null);
     }
 
     @DeleteMapping(path = "{id}")
     public void deleteContactById(@PathVariable("id") Long id) {
-        this.service.deleteContactById(id);
+        service.deleteContactById(id);
     }
 
     @PutMapping(path = "{id}")
     public void updateContact(@PathVariable("id") Long id, @RequestBody Contact contact) {
-        this.service.updateContactById(id, contact);
+        service.updateContactById(id, contact);
     }
 }
